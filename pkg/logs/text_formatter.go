@@ -29,8 +29,8 @@ func (t *TextFormatter) Format(entry *logrus.Entry) ([]byte, error) {
 			entry.Message)
 	} else {
 		body = fmt.Sprintf(format,
-			entry.Time.Format(t.timeFormat),
 			entry.Level.String(),
+			entry.Time.Format(t.timeFormat),
 			entry.Message)
 	}
 	b := &bytes.Buffer{}
