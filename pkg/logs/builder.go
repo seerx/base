@@ -6,8 +6,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/seerx/ycjk/pkg/logs/transfers"
-
+	"github.com/seerx/base/pkg/logs/transfers"
 	"github.com/sirupsen/logrus"
 )
 
