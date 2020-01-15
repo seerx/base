@@ -6,7 +6,7 @@ import (
 	"hash/crc32"
 	"time"
 
-	"github.com/seerx/rjhttp/pkg/cache/info"
+	"github.com/seerx/base/pkg/cache/info"
 )
 
 type item struct {

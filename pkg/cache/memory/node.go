@@ -1,12 +1,11 @@
 package memory
 
 import (
-	"errors"
 	"fmt"
 	"sync"
 	"time"
 
-	"github.com/seerx/rjhttp/pkg/cache/info"
+	"github.com/seerx/base/pkg/cache/info"
 )
 
 type node struct {
