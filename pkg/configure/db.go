@@ -11,6 +11,7 @@ type DBConf struct {
 	DB             string `json:"db" yaml:"db"`                         // 数据库名称
 	SSLMode        string `json:"sslMode" yaml:"sslMode"`               // pgsql 专用，默认为 disable
 	ConnectTimeout int    `json:"connectTimeout" yaml:"connectTimeout"` // 连接超时设置，默认为 10
+	TimeZone       string `json:"timeZone" yaml:"timeZone"`             // 时区
 }
 
 // String 生成数据库连接串
