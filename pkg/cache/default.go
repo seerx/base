@@ -5,8 +5,9 @@ package cache
 
 import (
 	"fmt"
-	"github.com/seerx/base/pkg/cache/memory"
 	"time"
+
+	"github.com/seerx/base/pkg/cache/memory"
 )
 
 var cacheInstance Cache
@@ -24,6 +25,7 @@ const (
 func InitCache(provider Provider) {
 	if provider == Local {
 		cacheInstance = memory.New(10, 30*time.Minute, 0)
+		return
 	}
 
 	panic(fmt.Errorf("Cann't find provider [%d]", provider))

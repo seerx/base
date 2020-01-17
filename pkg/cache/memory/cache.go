@@ -25,7 +25,7 @@ type Cache struct {
 
 // NewDefault 不进行超时处理的缓存
 func NewDefault() *Cache {
-	return New(10, 0, 0)
+	return New(10, 30*time.Minute, 0)
 }
 
 // New 创建本机内存缓存
