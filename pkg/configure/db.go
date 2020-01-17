@@ -39,5 +39,8 @@ func pgsql(dbc *DBConf) string {
 	if dbc.MaxIdleConnections <= 0 {
 		dbc.MaxIdleConnections = 1
 	}
+	if dbc.TimeZone == "" {
+		dbc.TimeZone = "Asia/Shanghai"
+	}
 	return fmt.Sprintf(pgTemplate, dbc.Host, dbc.Port, dbc.User, dbc.DB, dbc.Password, dbc.SSLMode, dbc.ConnectTimeout)
 }
