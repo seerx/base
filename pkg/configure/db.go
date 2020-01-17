@@ -14,6 +14,7 @@ type DBConf struct {
 	TimeZone           string `json:"timeZone" yaml:"timeZone"`                     // 时区
 	MaxIdleConnections int    `json:"maxIdleConnections" yaml:"maxIdleConnections"` // 最大空闲连接数
 	MaxConnections     int    `json:"maxConnections" yaml:"maxConnections"`         // 最大连接数
+	LogSQL             bool   `json:"logSql" yaml:"logSql"`
 }
 
 // String 生成数据库连接串
