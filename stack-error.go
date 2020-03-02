@@ -32,8 +32,8 @@ func (e *errStack) Error() string {
 	)
 
 	errString := ""
-	if e.raw != nil && e.Error() != "" {
-		errString = e.Error() + "\n"
+	if e.raw != nil && e.raw.Error() != "" {
+		errString = e.raw.Error() + "\n"
 	}
 
 	for {
