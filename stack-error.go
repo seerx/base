@@ -22,6 +22,17 @@ func ErrorStack(err error) error {
 	}
 }
 
+// ErrorStackSkip 错误堆栈信息
+func ErrorStackSkip(err error, skip int) error {
+	pcs := make([]uintptr, 32)
+	// skip func StackError invocations
+	count := runtime.Callers(2+skip, pcs)
+	return &errStack{
+		raw:     err,
+		stackPC: pcs[:count],
+	}
+}
+
 func (e *errStack) Error() string {
 	frames := runtime.CallersFrames(e.stackPC)
 
