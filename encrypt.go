@@ -11,6 +11,12 @@ import (
 //MD5 MD5 编码
 func MD5(val string) string {
 	data := []byte(val)
+	// has := md5.Sum(data)
+	return MD5It(data)
+}
+
+// MD5It MD5 编码
+func MD5It(data []byte) string {
 	has := md5.Sum(data)
 	return fmt.Sprintf("%x", has)
 }
@@ -30,7 +36,7 @@ func MD5s(strs ...string) string {
 
 // MD5f 格式化后再进行 MD5 编码
 func MD5f(format string, args ...interface{}) string {
-	return MD5(fmt.Sprintf(format, args))
+	return MD5(fmt.Sprintf(format, args...))
 }
 
 // AESEncrypt AES 加密
