@@ -6,6 +6,7 @@ import (
 	"crypto/md5"
 	"encoding/hex"
 	"fmt"
+	"strings"
 )
 
 //MD5 MD5 编码
@@ -23,14 +24,15 @@ func MD5It(data []byte) string {
 
 // MD5s MD5 加密多个字符串，以 : 分割
 func MD5s(strs ...string) string {
-	str := ""
-	for _, val := range strs {
-		if str == "" {
-			str = val
-		} else {
-			str += ":" + val
-		}
-	}
+	// str := ""
+	str := strings.Join(strs, ":")
+	// for _, val := range strs {
+	// 	if str == "" {
+	// 		str = val
+	// 	} else {
+	// 		str += ":" + val
+	// 	}
+	// }
 	return MD5(str)
 }
 
