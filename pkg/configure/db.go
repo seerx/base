@@ -2,6 +2,7 @@ package configure
 
 import "fmt"
 
+// DBConf 数据库配置
 type DBConf struct {
 	Dialect            string `json:"dialect" yaml:"dialect"`                       // 数据库: postgres,mysql ...
 	Host               string `json:"host" yaml:"host"`                             // 数据库地址

@@ -11,6 +11,7 @@ import (
 // ServiceConf 对外服务配置信息
 type ServiceConf struct {
 	Addr         string `json:"addr" yaml:"addr"`
+	Host         string `json:"host" yaml:"host"`
 	Port         int    `json:"port" yaml:"port"`
 	WebURL       string `json:"webUrl" yaml:"webUrl"`
 	WebFilesPath string `json:"webFilesPath" yaml:"webFilesPath"`
@@ -25,31 +26,31 @@ func checkPath(path string) string {
 	return path
 }
 
-// GetApiURL 获取 web 地址
+// GetWebURL 获取 web 地址
 func (s *ServiceConf) GetWebURL() string {
 	return checkPath(s.WebURL)
 }
 
-// GetApiURL 获取 api 地址
-func (s *ServiceConf) GetApiURL() string {
+// GetAPIURL 获取 api 地址
+func (s *ServiceConf) GetAPIURL() string {
 	return checkPath(s.APIURL)
 }
 
-// HttpAddr 生成 http 监听的地址
-func (s *ServiceConf) HttpAddr() string {
+// HTTPAddr 生成 http 监听的地址
+func (s *ServiceConf) HTTPAddr() string {
 	return fmt.Sprintf("%s:%d", s.Addr, s.Port)
 }
 
-// CreateHttpServer 根据配置信息创建 http Server
-func (s *ServiceConf) CreateHttpServer(apiHandler http.Handler, log *logrus.Logger) (*http.Server, *http.ServeMux) {
+// CreateHTTPServer 根据配置信息创建 http Server
+func (s *ServiceConf) CreateHTTPServer(apiHandler http.Handler, log *logrus.Logger) (*http.Server, *http.ServeMux) {
 	mux := &http.ServeMux{}
-	log.Infof("Server is bind to [%s]", s.HttpAddr())
+	log.Infof("Server is bind to [%s]", s.HTTPAddr())
 	svr := &http.Server{
-		Addr:    s.HttpAddr(),
+		Addr:    s.HTTPAddr(),
 		Handler: mux,
 	}
-	log.Infof("Api url bind to [%s]", s.GetApiURL())
-	mux.Handle(s.GetApiURL(), apiHandler)
+	log.Infof("Api url bind to [%s]", s.GetAPIURL())
+	mux.Handle(s.GetAPIURL(), apiHandler)
 	if s.WebFilesPath != "" {
 		log.Infof("Static page bind to [%s]", s.GetWebURL())
 		mux.Handle(s.GetWebURL(), http.FileServer(http.Dir(s.WebFilesPath)))
