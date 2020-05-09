@@ -74,6 +74,7 @@ func AESEncrypt(src, k, n string) (string, error) {
 	//return fmt.Sprintf("%x", cipherText), nil
 }
 
+// AESEncryptData AES 加密
 func AESEncryptData(src, key, nonce []byte) ([]byte, error) {
 	// The key argument should be the AES key, either 16 or 32 bytes
 	// to select AES-128 or AES-256.
@@ -134,7 +135,7 @@ func AESDecrypt(src, k, n string) (string, error) {
 	//return string(plainText), nil
 }
 
-// AESDecrypt AES 解密
+// AESDecryptData AES 解密
 func AESDecryptData(src, key, nonce []byte) ([]byte, error) {
 	// The key argument should be the AES key, either 16 or 32 bytes
 	// to select AES-128 or AES-256.
