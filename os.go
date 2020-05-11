@@ -48,7 +48,7 @@ func PathExists(path string) (bool, PathType, error) {
 
 // CheckDirs 检查路径是否存在，不存在则创建路径
 func CheckDirs(path string) bool {
-	exists, err := PathExists(path)
+	exists, _, err := PathExists(path)
 	if err != nil {
 		return false
 	}
