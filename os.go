@@ -47,18 +47,18 @@ func PathExists(path string) (bool, PathType, error) {
 }
 
 // CheckDirs 检查路径是否存在，不存在则创建路径
-func CheckDirs(path string) (bool, error) {
+func CheckDirs(path string) error {
 	exists, _, err := PathExists(path)
 	if err != nil {
-		return false, err
+		return err
 	}
 
 	if !exists {
 		err := os.MkdirAll(path, os.ModePerm)
 		if err != nil {
-			return false, err
+			return err
 		}
 	}
 
-	return true, nil
+	return nil
 }
