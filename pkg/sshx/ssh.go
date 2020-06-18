@@ -6,6 +6,7 @@ import (
 	"io"
 	"net"
 	"strings"
+	"sync"
 
 	"github.com/seerx/base"
 	"golang.org/x/crypto/ssh"
@@ -21,6 +22,7 @@ type SSH struct {
 	currentCommandOK    string
 	currentCommandError string
 	commandChan         chan *response
+	lock                sync.Mutex
 }
 
 type response struct {
@@ -219,9 +221,14 @@ func (s *SSH) proccessOutput(out io.Reader, ch chan *pipObject, fn func(buf []by
 		if err != nil {
 			if io.EOF != err {
 				// 发生错误
-				ch <- &pipObject{
-					byCommand: false,
-					err:       err,
+				if ch != nil {
+					s.lock.Lock()
+					if ch != nil {
+						ch <- &pipObject{
+							byCommand: false,
+							err:       err,
+						}
+					}
 				}
 			}
 			// 结束
@@ -229,7 +236,13 @@ func (s *SSH) proccessOutput(out io.Reader, ch chan *pipObject, fn func(buf []by
 		}
 		if sz > 0 {
 			// 有数据输出
-			ch <- fn(buf, sz)
+			if ch != nil {
+				s.lock.Lock()
+				if ch != nil {
+					ch <- fn(buf, sz)
+				}
+				s.lock.Unlock()
+			}
 		}
 	}
 }
@@ -266,6 +279,8 @@ func (s *SSH) runStderr(ch chan *pipObject) error {
 
 // Close 关闭连接
 func (s *SSH) Close() error {
+	s.lock.Lock()
+	defer s.lock.Unlock()
 	if s.ch != nil {
 		close(s.ch)
 		s.ch = nil
@@ -278,6 +293,7 @@ func (s *SSH) Close() error {
 	if s.client != nil {
 		err := s.client.Close()
 		s.client = nil
+		s.in = nil
 
 		return err
 	}
