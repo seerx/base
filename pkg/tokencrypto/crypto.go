@@ -10,6 +10,7 @@ import (
 )
 
 // Encypt 加密令牌
+// 使用前，一定要 SetCryptoKey 设置自己的秘钥,只需设置一次即可
 func Encypt(token interface{}) (string, error) {
 	var buf bytes.Buffer
 	encoder := gob.NewEncoder(&buf)

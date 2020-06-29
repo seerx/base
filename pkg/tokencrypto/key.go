@@ -15,9 +15,9 @@ const (
 
 var key []byte = []byte(base.MD5s(sign, host, answer))
 
-// SetAESKey 设置秘钥,建议使用长度为 32 byte 数组
-func SetAESKey(aesKey []byte) {
-	key = aesKey
+// SetCryptoKey 设置秘钥,建议使用长度为 32 byte 数组
+func SetCryptoKey(cryptoKey []byte) {
+	key = cryptoKey
 }
 
 // newNonce 新建 Nonce
