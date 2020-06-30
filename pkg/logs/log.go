@@ -8,240 +8,245 @@ import (
 )
 
 // Log 默认日志
-var Log *logrus.Logger
+var logger *logrus.Logger
 
 // InitLog 初始化默认日志
 func InitLog(b *Builder) {
 	if b == nil {
-		Log = NewBuilder().
+		logger = NewBuilder().
 			Build()
 	}
-	Log = b.Build()
+	logger = b.Build()
 }
 
-// WithField Log.WithField
+// Get 获取 logger
+func Get() *logrus.Logger {
+	return logger
+}
+
+// WithField logger.WithField
 func WithField(key string, value interface{}) *logrus.Entry {
-	return Log.WithField(key, value)
+	return logger.WithField(key, value)
 }
 
-// WithFields Log.WithFields
+// WithFields logger.WithFields
 func WithFields(fields logrus.Fields) *logrus.Entry {
-	return Log.WithFields(fields)
+	return logger.WithFields(fields)
 }
 
-// WithError Log.WithError
+// WithError logger.WithError
 func WithError(err error) *logrus.Entry {
-	return Log.WithError(err)
+	return logger.WithError(err)
 }
 
 // WithContext Add a context to the log entry.
 func WithContext(ctx context.Context) *logrus.Entry {
-	return Log.WithContext(ctx)
+	return logger.WithContext(ctx)
 }
 
 // WithTime Overrides the time of the log entry.
 func WithTime(t time.Time) *logrus.Entry {
-	return Log.WithTime(t)
+	return logger.WithTime(t)
 }
 
-// Logf Log.Logf
+// Logf logger.Logf
 func Logf(level logrus.Level, format string, args ...interface{}) {
-	Log.Logf(level, format, args...)
+	logger.Logf(level, format, args...)
 }
 
-// Tracef Log.Tracef
+// Tracef logger.Tracef
 func Tracef(format string, args ...interface{}) {
-	Log.Tracef(format, args...)
+	logger.Tracef(format, args...)
 }
 
-// Debugf Log.Debugf
+// Debugf logger.Debugf
 func Debugf(format string, args ...interface{}) {
-	Log.Debugf(format, args...)
+	logger.Debugf(format, args...)
 }
 
-// Infof Log.Infof
+// Infof logger.Infof
 func Infof(format string, args ...interface{}) {
-	Log.Infof(format, args...)
+	logger.Infof(format, args...)
 }
 
-// Printf Log.Printf
+// Printf logger.Printf
 func Printf(format string, args ...interface{}) {
-	Log.Printf(format, args...)
+	logger.Printf(format, args...)
 }
 
-// Warnf Log.Warnf
+// Warnf logger.Warnf
 func Warnf(format string, args ...interface{}) {
-	Log.Warnf(format, args...)
+	logger.Warnf(format, args...)
 }
 
-// Warningf Log.Warningf
+// Warningf logger.Warningf
 func Warningf(format string, args ...interface{}) {
-	Log.Warningf(format, args...)
+	logger.Warningf(format, args...)
 }
 
-// Errorf Log.Errorf
+// Errorf logger.Errorf
 func Errorf(format string, args ...interface{}) {
-	Log.Errorf(format, args...)
+	logger.Errorf(format, args...)
 }
 
-// Fatalf Log.Fatalf
+// Fatalf logger.Fatalf
 func Fatalf(format string, args ...interface{}) {
-	Log.Fatalf(format, args...)
+	logger.Fatalf(format, args...)
 }
 
-// Panicf Log.Panicf
+// Panicf logger.Panicf
 func Panicf(format string, args ...interface{}) {
-	Log.Panicf(format, args...)
+	logger.Panicf(format, args...)
 }
 
-// LogLog Log.Log
-func LogLog(level logrus.Level, args ...interface{}) {
-	Log.Log(level, args...)
+// Log logger.Log
+func Log(level logrus.Level, args ...interface{}) {
+	logger.Log(level, args...)
 }
 
-// Trace Log.Trace
+// Trace logger.Trace
 func Trace(args ...interface{}) {
-	Log.Trace(args...)
+	logger.Trace(args...)
 }
 
-// Debug Log.Debug
+// Debug logger.Debug
 func Debug(args ...interface{}) {
-	Log.Debug(args...)
+	logger.Debug(args...)
 }
 
-// Info Log.Info
+// Info logger.Info
 func Info(args ...interface{}) {
-	Log.Info(args...)
+	logger.Info(args...)
 }
 
-// Print Log.Print
+// Print logger.Print
 func Print(args ...interface{}) {
-	Log.Print(args...)
+	logger.Print(args...)
 }
 
-// Warn Log.Warn
+// Warn logger.Warn
 func Warn(args ...interface{}) {
-	Log.Warn(args...)
+	logger.Warn(args...)
 }
 
-// Warning Log.Warning
+// Warning logger.Warning
 func Warning(args ...interface{}) {
-	Log.Warning(args...)
+	logger.Warning(args...)
 }
 
-// Error Log.Error
+// Error logger.Error
 func Error(args ...interface{}) {
-	Log.Error(args...)
+	logger.Error(args...)
 }
 
-// Fatal Log.Fatal
+// Fatal logger.Fatal
 func Fatal(args ...interface{}) {
-	Log.Fatal(args...)
+	logger.Fatal(args...)
 }
 
-// Panic Log.Panic
+// Panic logger.Panic
 func Panic(args ...interface{}) {
-	Log.Panic(args...)
+	logger.Panic(args...)
 }
 
-// Logln Log.Logln
+// Logln logger.Logln
 func Logln(level logrus.Level, args ...interface{}) {
-	Log.Logln(level, args...)
+	logger.Logln(level, args...)
 }
 
-// Traceln Log.Traceln
+// Traceln logger.Traceln
 func Traceln(args ...interface{}) {
-	Log.Traceln(args...)
+	logger.Traceln(args...)
 }
 
-// Debugln Log.Debugln
+// Debugln logger.Debugln
 func Debugln(args ...interface{}) {
-	Log.Debugln(args...)
+	logger.Debugln(args...)
 }
 
-// Infoln Log.Infoln
+// Infoln logger.Infoln
 func Infoln(args ...interface{}) {
-	Log.Infoln(args...)
+	logger.Infoln(args...)
 }
 
-// Println Log.Println
+// Println logger.Println
 func Println(args ...interface{}) {
-	Log.Println(args...)
+	logger.Println(args...)
 }
 
-// Warnln Log.Warnln
+// Warnln logger.Warnln
 func Warnln(args ...interface{}) {
-	Log.Warnln(args...)
+	logger.Warnln(args...)
 }
 
-// Warningln Log.Warningln
+// Warningln logger.Warningln
 func Warningln(args ...interface{}) {
-	Log.Warningln(args...)
+	logger.Warningln(args...)
 }
 
-// Errorln Log.Errorln
+// Errorln logger.Errorln
 func Errorln(args ...interface{}) {
-	Log.Errorln(args...)
+	logger.Errorln(args...)
 }
 
-// Fatalln Log.Fatalln
+// Fatalln logger.Fatalln
 func Fatalln(args ...interface{}) {
-	Log.Fatalln(args...)
+	logger.Fatalln(args...)
 }
 
-// Panicln Log.Panicln
+// Panicln logger.Panicln
 func Panicln(args ...interface{}) {
-	Log.Panicln(args...)
+	logger.Panicln(args...)
 }
 
-// Exit Log.Exit
+// Exit logger.Exit
 // func Exit(code int) {
-// 	Log.Exit(code)
+// 	logger.Exit(code)
 // }
 
 //SetNoLock When file is opened with appending mode, it's safe to
 //write concurrently to a file (within 4k message on Linux).
 //In these cases user can choose to disable the lock.
 func SetNoLock() {
-	Log.SetNoLock()
+	logger.SetNoLock()
 }
 
 // SetLevel sets the logger level.
 // func SetLevel(level logrus.Level) {
-// 	Log.SetLevel(level)
+// 	logger.SetLevel(level)
 // }
 
 // GetLevel returns the logger level.
 // func GetLevel() logrus.Level {
-// 	return Log.GetLevel()
+// 	return logger.GetLevel()
 // }
 
 // AddHook adds a hook to the logger hooks.
 // func AddHook(hook logrus.Hook) {
-// 	Log.AddHook(hook)
+// 	logger.AddHook(hook)
 // }
 
 // IsLevelEnabled checks if the log level of the logger is greater than the level param
 // func IsLevelEnabled(level logrus.Level) bool {
-// 	return Log.IsLevelEnabled(level)
+// 	return logger.IsLevelEnabled(level)
 // }
 
 // SetFormatter sets the logger formatter.
 // func SetFormatter(formatter logrus.Formatter) {
-// 	Log.SetFormatter(formatter)
+// 	logger.SetFormatter(formatter)
 // }
 
 // SetOutput sets the logger output.
 // func SetOutput(output io.Writer) {
-// 	Log.SetOutput(output)
+// 	logger.SetOutput(output)
 // }
 
-// SetReportCaller Log.SetReportCaller
+// SetReportCaller logger.SetReportCaller
 // func SetReportCaller(reportCaller bool) {
-// 	Log.SetReportCaller(reportCaller)
+// 	logger.SetReportCaller(reportCaller)
 // }
 
 // ReplaceHooks replaces the logger hooks and returns the old ones
 // func ReplaceHooks(hooks logrus.LevelHooks) logrus.LevelHooks {
-// 	return Log.ReplaceHooks(hooks)
+// 	return logger.ReplaceHooks(hooks)
 // }
