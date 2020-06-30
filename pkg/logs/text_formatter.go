@@ -17,6 +17,7 @@ const (
 	format           = "[%s] %s\n%s"
 )
 
+// Format 格式化日志信息
 func (t *TextFormatter) Format(entry *logrus.Entry) ([]byte, error) {
 	var body string
 	if entry.HasCaller() {

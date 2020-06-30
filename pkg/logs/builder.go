@@ -13,11 +13,11 @@ import (
 // Builder 日志 Builder
 type Builder struct {
 	appTag          string       // 应用标志
-	prettyJson      bool         // 输出格式化的 json
+	prettyJSON      bool         // 输出格式化的 json
 	timestampFormat string       // 日期格式
 	reportCaller    bool         // 是否输出日志发生地址 , 文件 函数 行号
 	level           logrus.Level // 日志输出级别
-	outputJson      bool
+	outputJSON      bool
 
 	console bool   // 在控制台输出
 	udpHost string // 接收日志的 udp 主机
@@ -34,17 +34,18 @@ func NewBuilder() *Builder {
 	}
 }
 
+// Build 创建日志
 func (b *Builder) Build() *logrus.Logger {
 	var logger = logrus.New()
 	setNull(logger)
-	if b.outputJson {
+	if b.outputJSON {
 		logger.Formatter = &logrus.JSONFormatter{
 			TimestampFormat:  b.timestampFormat,
 			DisableTimestamp: false,
 			DataKey:          "",
 			FieldMap:         nil,
 			CallerPrettyfier: nil,
-			PrettyPrint:      b.prettyJson,
+			PrettyPrint:      b.prettyJSON,
 		}
 	} else {
 		logger.Formatter = &TextFormatter{
@@ -98,15 +99,15 @@ func (b *Builder) WriteToConsole(write bool) *Builder {
 	return b
 }
 
-// OutputJson 输出 json 格式
-func (b *Builder) OutputJson(json bool) *Builder {
-	b.outputJson = json
+// OutputJSON 输出 json 格式
+func (b *Builder) OutputJSON(json bool) *Builder {
+	b.outputJSON = json
 	return b
 }
 
-// PrettyJson 是否格式化输出
-func (b *Builder) PrettyJson(pretty bool) *Builder {
-	b.prettyJson = pretty
+// PrettyJSON 是否格式化输出
+func (b *Builder) PrettyJSON(pretty bool) *Builder {
+	b.prettyJSON = pretty
 	return b
 }
 
@@ -116,7 +117,7 @@ func (b *Builder) TimestampFormat(format string) *Builder {
 	return b
 }
 
-// SetAppTag 设置应用标志
+// AppTag 设置应用标志
 func (b *Builder) AppTag(appTag string) *Builder {
 	b.appTag = appTag
 	return b
@@ -131,6 +132,7 @@ func setNull(logger *logrus.Logger) {
 	logger.SetOutput(writer)
 }
 
+// MakeTransfer 创建转发函数
 func MakeTransfer(cfg *transfers.TransferConfigure) transfers.TransferFn {
 	if cfg == nil || cfg.Type == transfers.CONSOLE {
 		return transfers.CreateConsoleTransfer(cfg)

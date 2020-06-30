@@ -5,6 +5,7 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+// TransferHook 转发钩子
 type TransferHook struct {
 	tag      string
 	fmt      logrus.Formatter
@@ -12,6 +13,7 @@ type TransferHook struct {
 	transfer transfers.TransferFn
 }
 
+// NewTransferHook 新建转发钩子
 func NewTransferHook(tag string, fmt logrus.Formatter, transferFn ...transfers.TransferFn) *TransferHook {
 	var chs []chan []byte
 	for _, fn := range transferFn {
@@ -27,6 +29,7 @@ func NewTransferHook(tag string, fmt logrus.Formatter, transferFn ...transfers.T
 	}
 }
 
+// Levels 日志级别
 func (t *TransferHook) Levels() []logrus.Level {
 	return []logrus.Level{
 		logrus.PanicLevel,
@@ -38,9 +41,16 @@ func (t *TransferHook) Levels() []logrus.Level {
 	}
 }
 
+// Fire 日志钩子
 func (t *TransferHook) Fire(entry *logrus.Entry) error {
 	if t.tag != "" {
 		entry.Data["app"] = t.tag
+	}
+	if errObj := entry.Data["error"]; errObj != nil {
+		if err, ok := errObj.(error); ok {
+			err = stack.WrapErrorSkip(err, 1)
+			entry.Data["error"] = err
+		}
 	}
 	data, err := t.fmt.Format(entry)
 	if err != nil {
