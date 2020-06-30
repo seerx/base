@@ -6,9 +6,12 @@ import (
 	"os"
 	"time"
 
+	"github.com/seerx/base"
 	"github.com/seerx/base/pkg/logs/transfers"
 	"github.com/sirupsen/logrus"
 )
+
+const logruspkg = "github.com/sirupsen/logrus"
 
 // Builder 日志 Builder
 type Builder struct {
@@ -19,9 +22,10 @@ type Builder struct {
 	level           logrus.Level // 日志输出级别
 	outputJSON      bool
 
-	console bool   // 在控制台输出
-	udpHost string // 接收日志的 udp 主机
-	udpPort int    // 接收日志的 udp 端口
+	console      bool     // 在控制台输出
+	udpHost      string   // 接收日志的 udp 主机
+	udpPort      int      // 接收日志的 udp 端口
+	skipPackages []string // 忽略的包
 }
 
 // NewBuilder 创建 builder
@@ -36,6 +40,20 @@ func NewBuilder() *Builder {
 
 // Build 创建日志
 func (b *Builder) Build() *logrus.Logger {
+	// 创建堆栈调用生成组件
+	added := false
+	stack := base.NewCallStack()
+	for _, pkg := range b.skipPackages {
+		stack.AddSkipPackage(pkg)
+		if pkg == logruspkg && !added {
+			added = true
+		}
+	}
+	if !added {
+		stack.AddSkipPackage(logruspkg)
+	}
+
+	// 创建日志
 	var logger = logrus.New()
 	setNull(logger)
 	if b.outputJSON {
@@ -68,6 +86,7 @@ func (b *Builder) Build() *logrus.Logger {
 	}
 
 	logger.AddHook(NewTransferHook(b.appTag,
+		stack,
 		logger.Formatter,
 		txfns...))
 
@@ -96,6 +115,12 @@ func (b *Builder) WriteToUDP(host string, port int) *Builder {
 // WriteToConsole 是否输出到控制台
 func (b *Builder) WriteToConsole(write bool) *Builder {
 	b.console = write
+	return b
+}
+
+// AddSkipPackages 添加错误堆栈中忽略的包
+func (b *Builder) AddSkipPackages(pkgs ...string) *Builder {
+	b.skipPackages = append(b.skipPackages, pkgs...)
 	return b
 }
 

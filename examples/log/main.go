@@ -8,13 +8,16 @@ import (
 	"github.com/seerx/base/pkg/logs"
 )
 
+func test() {
+	logs.Log.WithError(errors.New("111")).Info("123")
+}
+
 func main() {
 	logs.InitLog(logs.NewBuilder().
-		//AppTag("ycjk").
 		TimestampFormat(base.TFDatetimeMilli).
-		ReportCaller(false))
+		ReportCaller(true))
 	// fmt.Fprint(os.Stderr, "111111")
-	logs.Log.WithError(errors.New("111")).Info("123")
+	test()
 	// 	main.main
 	//     /Users/dotjava/workspace/go-projects/base/examples/log/main.go:17
 	//   runtime.main

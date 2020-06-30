@@ -5,8 +5,16 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+// Logger 日志
+type Logger struct {
+	*logrus.Logger
+	stack *base.CallStack
+}
+
 // Log 默认日志
 var Log *logrus.Logger
+
+// var stack *base.CallStack
 
 // InitLog 初始化默认日志
 func InitLog(b *Builder) {
@@ -14,14 +22,9 @@ func InitLog(b *Builder) {
 		Log = NewBuilder().
 			Build()
 	}
+	// stack = base.NewCallStack()
+	// stack.AddSkipPackage("github.com/sirupsen/logrus")
 	Log = b.Build()
-}
-
-var stack *base.CallStack
-
-func init() {
-	stack = base.NewCallStack()
-	stack.AddSkipPackage("github.com/sirupsen/logrus")
 }
 
 // InitLog 初始化日志组件

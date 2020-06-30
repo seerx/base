@@ -1,6 +1,7 @@
 package logs
 
 import (
+	"github.com/seerx/base"
 	"github.com/seerx/base/pkg/logs/transfers"
 	"github.com/sirupsen/logrus"
 )
@@ -8,13 +9,14 @@ import (
 // TransferHook 转发钩子
 type TransferHook struct {
 	tag      string
+	stack    *base.CallStack
 	fmt      logrus.Formatter
 	chs      []chan []byte
 	transfer transfers.TransferFn
 }
 
 // NewTransferHook 新建转发钩子
-func NewTransferHook(tag string, fmt logrus.Formatter, transferFn ...transfers.TransferFn) *TransferHook {
+func NewTransferHook(tag string, stack *base.CallStack, fmt logrus.Formatter, transferFn ...transfers.TransferFn) *TransferHook {
 	var chs []chan []byte
 	for _, fn := range transferFn {
 		ch := make(chan []byte, 500)
@@ -22,9 +24,10 @@ func NewTransferHook(tag string, fmt logrus.Formatter, transferFn ...transfers.T
 		go fn(ch)
 	}
 	return &TransferHook{
-		tag: tag,
-		fmt: fmt,
-		chs: chs,
+		tag:   tag,
+		stack: stack,
+		fmt:   fmt,
+		chs:   chs,
 		//transfer: transferFn,
 	}
 }
@@ -46,9 +49,12 @@ func (t *TransferHook) Fire(entry *logrus.Entry) error {
 	if t.tag != "" {
 		entry.Data["app"] = t.tag
 	}
+	// 是否存在错误信息 ? WithError
 	if errObj := entry.Data["error"]; errObj != nil {
 		if err, ok := errObj.(error); ok {
-			err = stack.WrapErrorSkip(err, 1)
+			// 包装调用堆栈
+			err = t.stack.WrapErrorSkip(err, 1)
+			// 替换原有错误信息
 			entry.Data["error"] = err
 		}
 	}

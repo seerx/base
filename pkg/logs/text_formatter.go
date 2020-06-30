@@ -13,8 +13,8 @@ type TextFormatter struct {
 }
 
 const (
-	formatWithCaller = "[%s] %s %s\n%s:%d\n%s"
-	format           = "[%s] %s\n%s"
+	formatWithCaller = "[%s] %s %s\n%s\n%s:%d"
+	format           = "[%s] %s %s"
 )
 
 // Format 格式化日志信息
@@ -24,10 +24,10 @@ func (t *TextFormatter) Format(entry *logrus.Entry) ([]byte, error) {
 		body = fmt.Sprintf(formatWithCaller,
 			entry.Level.String(),
 			entry.Time.Format(t.timeFormat),
+			entry.Message,
 			entry.Caller.Func.Name(),
 			entry.Caller.File,
-			entry.Caller.Line,
-			entry.Message)
+			entry.Caller.Line)
 	} else {
 		body = fmt.Sprintf(format,
 			entry.Level.String(),
