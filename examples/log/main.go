@@ -9,13 +9,12 @@ import (
 )
 
 func test() {
-	logs.Log.WithError(errors.New("111")).Info("123")
+	logs.WithError(errors.New("111")).Info("123")
 }
 
 func main() {
 	logs.InitLog(logs.NewBuilder().
-		TimestampFormat(base.TFDatetimeMilli).
-		ReportCaller(true))
+		TimestampFormat(base.TFDatetimeMilli))
 	// fmt.Fprint(os.Stderr, "111111")
 	test()
 	// 	main.main

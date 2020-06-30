@@ -34,7 +34,7 @@ func NewBuilder() *Builder {
 		console:         true,
 		level:           logrus.InfoLevel,
 		timestampFormat: time.RFC3339,
-		reportCaller:    true,
+		reportCaller:    false,
 	}
 }
 
