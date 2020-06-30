@@ -1,4 +1,4 @@
-package logs
+package log
 
 import (
 	"bufio"
@@ -7,7 +7,7 @@ import (
 	"time"
 
 	"github.com/seerx/base"
-	"github.com/seerx/base/pkg/logs/transfers"
+	"github.com/seerx/base/pkg/log/transfers"
 	"github.com/sirupsen/logrus"
 )
 

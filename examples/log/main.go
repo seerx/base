@@ -5,15 +5,15 @@ import (
 	"time"
 
 	"github.com/seerx/base"
-	"github.com/seerx/base/pkg/logs"
+	"github.com/seerx/base/pkg/log"
 )
 
 func test() {
-	logs.WithError(errors.New("111")).Info("123")
+	log.WithError(errors.New("111")).Info("123")
 }
 
 func main() {
-	logs.InitLog(logs.NewBuilder().
+	log.InitLog(log.NewBuilder().
 		TimestampFormat(base.TFDatetimeMilli))
 	// fmt.Fprint(os.Stderr, "111111")
 	test()
