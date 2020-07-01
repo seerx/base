@@ -52,7 +52,7 @@ func (s *ServiceConf) CreateHTTPServer(apiHandler http.Handler, log *logrus.Logg
 	log.WithField("api", fmt.Sprintf("%s%s", s.HTTPAddr(), s.GetAPIURL())).Infof("API")
 	mux.Handle(s.GetAPIURL(), apiHandler)
 	if s.WebFilesPath != "" {
-		log.WithField("api", fmt.Sprintf("%s%s", s.GetWebURL(), s.GetAPIURL())).Infof("Static page")
+		log.WithField("http", fmt.Sprintf("%s%s", s.HTTPAddr(), s.GetWebURL())).Infof("Static page")
 		mux.Handle(s.GetWebURL(), http.FileServer(http.Dir(s.WebFilesPath)))
 	}
 
