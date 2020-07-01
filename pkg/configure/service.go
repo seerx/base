@@ -44,15 +44,15 @@ func (s *ServiceConf) HTTPAddr() string {
 // CreateHTTPServer 根据配置信息创建 http Server
 func (s *ServiceConf) CreateHTTPServer(apiHandler http.Handler, log *logrus.Logger) (*http.Server, *http.ServeMux) {
 	mux := &http.ServeMux{}
-	log.Infof("Server is bind to [%s]", s.HTTPAddr())
+	log.WithField("addr", s.HTTPAddr()).Infof("Server is listening")
 	svr := &http.Server{
 		Addr:    s.HTTPAddr(),
 		Handler: mux,
 	}
-	log.Infof("Api url bind to [%s]", s.GetAPIURL())
+	log.WithField("api", fmt.Sprintf("%s%s", s.HTTPAddr(), s.GetAPIURL())).Infof("API")
 	mux.Handle(s.GetAPIURL(), apiHandler)
 	if s.WebFilesPath != "" {
-		log.Infof("Static page bind to [%s]", s.GetWebURL())
+		log.WithField("api", fmt.Sprintf("%s%s", s.GetWebURL(), s.GetAPIURL())).Infof("Static page")
 		mux.Handle(s.GetWebURL(), http.FileServer(http.Dir(s.WebFilesPath)))
 	}
 
