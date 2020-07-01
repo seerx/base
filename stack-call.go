@@ -21,8 +21,10 @@ type errStack struct {
 func NewCallStack() *CallStack {
 	return &CallStack{
 		skipPackages: []string{
-			"runtime.main",
-			"runtime.goexit",
+			"runtime.",
+			// "runtime.main",
+			// "runtime.goexit",
+			// "runtime.doInit",
 			// "github.com/sirupsen/logrus",
 			// "github.com/seerx/base.ErrorStack",
 			// "github.com/seerx/base/pkg/logs",
