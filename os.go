@@ -35,15 +35,16 @@ const (
 func PathExists(path string) (bool, PathType, error) {
 	st, err := os.Lstat(path)
 	if err == nil {
-		return true, PTNone, nil
+		if st.IsDir() {
+			return false, PTDirectory, err
+		}
+		return true, PTFile, nil
 	}
 	if os.IsNotExist(err) {
 		return false, PTNone, nil
 	}
-	if st.IsDir() {
-		return false, PTDirectory, err
-	}
-	return false, PTFile, err
+
+	return false, PTNone, err
 }
 
 // CheckDirs 检查路径是否存在，不存在则创建路径
