@@ -36,7 +36,7 @@ func PathExists(path string) (bool, PathType, error) {
 	st, err := os.Lstat(path)
 	if err == nil {
 		if st.IsDir() {
-			return false, PTDirectory, err
+			return true, PTDirectory, err
 		}
 		return true, PTFile, nil
 	}
