@@ -2,6 +2,7 @@ package log
 
 import (
 	"context"
+	"net/http"
 	"time"
 
 	"github.com/sirupsen/logrus"
@@ -22,6 +23,17 @@ func InitLog(b *Builder) {
 // Get 获取 logger
 func Get() *logrus.Logger {
 	return logger
+}
+
+// WithFieldExt logger.WithField
+func WithFieldExt(key string, value interface{}, request *http.Request) *logrus.Entry {
+	return logger.WithFields(logrus.Fields{key: value, "ip": request.RemoteAddr})
+}
+
+// WithFieldsExt logger.WithFields
+func WithFieldsExt(fields logrus.Fields, request *http.Request) *logrus.Entry {
+	fields["ip"] = request.RemoteAddr
+	return logger.WithFields(fields)
 }
 
 // WithField logger.WithField
