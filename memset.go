@@ -2,6 +2,17 @@ package base
 
 import "unsafe"
 
+// MemCopy 可以拷贝数组、结构体
+func MemCopy(dest unsafe.Pointer, src unsafe.Pointer, n uintptr) {
+	destPtr := uintptr(dest)
+	srcPtr := uintptr(src)
+	var i uintptr
+	for i = 0; i < n; i++ {
+		destByte := (*byte)(unsafe.Pointer(destPtr + i))
+		*destByte = *(*byte)(unsafe.Pointer(srcPtr + i))
+	}
+}
+
 // MemSet 可以填充数组、结构体
 func MemSet(s unsafe.Pointer, c byte, n uintptr) {
 	ptr := uintptr(s)
