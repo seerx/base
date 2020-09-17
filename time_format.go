@@ -3,6 +3,10 @@ package base
 const (
 	// TFDatetime 2006-01-02 15:04:05
 	TFDatetime = "2006-01-02 15:04:05"
+	// TFDatetimeNoSec 2006-01-02 15:04
+	TFDatetimeNoSec = "2006-01-02 15:04"
+	// TFDatetimeNoMinSec 2006-01-02 15
+	TFDatetimeNoMinSec = "2006-01-02 15"
 	// TFDatetimeMilli 2006-01-02 15:04:05.000
 	TFDatetimeMilli = "2006-01-02 15:04:05.000"
 	// TFDate 2006-01-02
