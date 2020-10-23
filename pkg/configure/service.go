@@ -5,8 +5,34 @@ import (
 	"net/http"
 	"strings"
 
+	"github.com/seerx/base"
 	"github.com/sirupsen/logrus"
 )
+
+// SSL ssl 配置
+type SSL struct {
+	Key string
+	Crt string
+}
+
+// IsValid 判断 SSL 配置是否可用
+func (s *SSL) IsValid() bool {
+	if s.Key == "" || s.Crt == "" {
+		return false
+	}
+
+	e, t, err := base.PathExists(s.Key)
+	if err != nil || !e || t != base.PTFile {
+		return false
+	}
+
+	e, t, err = base.PathExists(s.Crt)
+	if err != nil || !e || t != base.PTFile {
+		return false
+	}
+
+	return true
+}
 
 // ServiceConf 对外服务配置信息
 type ServiceConf struct {
@@ -17,6 +43,7 @@ type ServiceConf struct {
 	WebFilesPath string `json:"webFilesPath" yaml:"webFilesPath"`
 	APIDoc       bool   `json:"apiDoc" yaml:"apiDoc"`
 	APIURL       string `json:"apiUrl" yaml:"apiUrl"`
+	SSL          SSL    `json:"ssl" yaml:"ssl"`
 }
 
 func checkPath(path string) string {
