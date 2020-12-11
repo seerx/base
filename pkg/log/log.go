@@ -3,6 +3,7 @@ package log
 import (
 	"context"
 	"net/http"
+	"runtime"
 	"time"
 
 	"github.com/sirupsen/logrus"
@@ -18,6 +19,8 @@ func InitLog(b *Builder) {
 			Build()
 	}
 	logger = b.Build()
+	// runtime.Compiler
+	logger.WithField("version", runtime.Version()).Info("Golang " + runtime.Compiler)
 }
 
 // Get 获取 logger
