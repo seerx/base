@@ -63,3 +63,20 @@ func CheckDirs(path string) error {
 
 	return nil
 }
+
+func substr(s string, pos, length int) string {
+	runes := []rune(s)
+	l := pos + length
+	if l > len(runes) {
+		l = len(runes)
+	}
+	return string(runes[pos:l])
+}
+
+// GetParentPath 计算上级目录
+func GetParentPath(path string) string {
+	if path == "" {
+		return path
+	}
+	substr(path, 0, strings.LastIndex(path, string(os.PathSeparator)))
+}
