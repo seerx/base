@@ -78,5 +78,5 @@ func GetParentPath(path string) string {
 	if path == "" {
 		return path
 	}
-	substr(path, 0, strings.LastIndex(path, string(os.PathSeparator)))
+	return substr(path, 0, strings.LastIndex(path, string(os.PathSeparator)))
 }
