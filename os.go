@@ -78,7 +78,7 @@ func CheckDirs(path string) error {
 func GetParentPath(path string) string {
 	path = filepath.Clean(path)
 	ary := strings.Split(path, string(filepath.Separator))
-	return filepath.Join(ary[0 : len(ary)-2]...)
+	return filepath.Join(ary[0 : len(ary)-1]...)
 	// if path == "" {
 	// 	return path
 	// }
