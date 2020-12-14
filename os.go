@@ -65,29 +65,12 @@ func CheckDirs(path string) error {
 	return nil
 }
 
-// func substr(s string, pos, length int) string {
-// 	runes := []rune(s)
-// 	l := pos + length
-// 	if l > len(runes) {
-// 		l = len(runes)
-// 	}
-// 	return string(runes[pos:l])
-// }
-
-// GetParentPath 计算上级目录
-func GetParentPath(path string) string {
+// GetParentPathAndMyName 计算上级目录和本身名称
+func GetParentPathAndMyName(path string) (string, string) {
 	path = filepath.Clean(path)
 	ary := strings.Split(path, string(filepath.Separator))
 	if ary[0] == "" {
 		ary[0] = string(filepath.Separator)
 	}
-	return filepath.Join(ary[0 : len(ary)-1]...)
-	// if path == "" {
-	// 	return path
-	// }
-	// p := strings.LastIndex(path, string(os.PathSeparator))
-	// if p == -1 {
-	// 	return ""
-	// }
-	// return substr(path, 0, p)
+	return filepath.Join(ary[0 : len(ary)-1]...), ary[len(ary)-1]
 }
