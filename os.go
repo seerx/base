@@ -3,6 +3,7 @@ package base
 import (
 	"os"
 	"os/exec"
+	"path/filepath"
 	"strings"
 )
 
@@ -64,19 +65,26 @@ func CheckDirs(path string) error {
 	return nil
 }
 
-func substr(s string, pos, length int) string {
-	runes := []rune(s)
-	l := pos + length
-	if l > len(runes) {
-		l = len(runes)
-	}
-	return string(runes[pos:l])
-}
+// func substr(s string, pos, length int) string {
+// 	runes := []rune(s)
+// 	l := pos + length
+// 	if l > len(runes) {
+// 		l = len(runes)
+// 	}
+// 	return string(runes[pos:l])
+// }
 
 // GetParentPath 计算上级目录
 func GetParentPath(path string) string {
-	if path == "" {
-		return path
-	}
-	return substr(path, 0, strings.LastIndex(path, string(os.PathSeparator)))
+	path = filepath.Clean(path)
+	ary := strings.Split(path, string(filepath.Separator))
+	return filepath.Join(ary[0 : len(ary)-2]...)
+	// if path == "" {
+	// 	return path
+	// }
+	// p := strings.LastIndex(path, string(os.PathSeparator))
+	// if p == -1 {
+	// 	return ""
+	// }
+	// return substr(path, 0, p)
 }
