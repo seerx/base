@@ -2,6 +2,7 @@ package log
 
 import (
 	"context"
+	"encoding/json"
 	"net/http"
 	"runtime"
 	"time"
@@ -62,6 +63,16 @@ func WithContext(ctx context.Context) *logrus.Entry {
 // WithTime Overrides the time of the log entry.
 func WithTime(t time.Time) *logrus.Entry {
 	return logger.WithTime(t)
+}
+
+// PrintJSON 打印 json 数据
+func PrintJSON(obj interface{}) {
+	data, err := json.MarshalIndent(obj, "", "  ")
+	if err != nil {
+		logger.WithError(err).Errorf("PrintJSON %v", obj)
+		return
+	}
+	logger.Info(string(data))
 }
 
 // Logf logger.Logf
