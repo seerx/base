@@ -2,7 +2,9 @@ package base
 
 import (
 	"encoding/binary"
+	"io/ioutil"
 	"net"
+	"net/http"
 )
 
 // IPType IP 地址类型定义
@@ -119,4 +121,18 @@ func Long2IP(ipLong uint32) string {
 	binary.BigEndian.PutUint32(ipByte, ipLong)
 	ip := net.IP(ipByte)
 	return ip.String()
+}
+
+// GetExternalIP 获取外网 IP 地址
+func GetExternalIP() (string, error) {
+	resp, err := http.Get("http://myexternalip.com/raw")
+	if err != nil {
+		return "", err
+	}
+	defer resp.Body.Close()
+	content, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return "", err
+	}
+	return string(content), nil
 }
