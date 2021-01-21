@@ -3,6 +3,7 @@ package log
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"runtime"
 	"time"
@@ -65,14 +66,16 @@ func WithTime(t time.Time) *logrus.Entry {
 	return logger.WithTime(t)
 }
 
-// PrintJSON 打印 json 数据
-func PrintJSON(obj interface{}) {
+// WithJSON 打印 JOSN
+func WithJSON(obj interface{}) *logrus.Entry {
 	data, err := json.MarshalIndent(obj, "", "  ")
 	if err != nil {
-		logger.WithError(err).Errorf("PrintJSON %v", obj)
-		return
+		return logger.WithFields(logrus.Fields{
+			"WithJSON-Error": err.Error(),
+			"WithJSON-Value": fmt.Sprintf("%v", obj),
+		})
 	}
-	logger.Info(string(data))
+	return logger.WithField("JSON", string(data))
 }
 
 // Logf logger.Logf
