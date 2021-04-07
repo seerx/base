@@ -21,14 +21,14 @@ func GetConfigureData(configureFileArgName string, configureEnvArgName string) (
 		// 配置文件优先
 		fd, err := os.Open(file)
 		if err != nil {
-			errOfFile = fmt.Errorf("Open configure file error: [%w]", err)
+			errOfFile = fmt.Errorf("open configure file error: [%w]", err)
 			goto second
 			// return nil, fmt.Errorf("Open configure file error: [%w]", err)
 		}
 		defer fd.Close()
 		val, err := ioutil.ReadAll(fd)
 		if err != nil {
-			errOfFile = fmt.Errorf("Read configure file error: [%w]", err)
+			errOfFile = fmt.Errorf("read configure file error: [%w]", err)
 			goto second
 			// return nil, fmt.Errorf("Read configure file error: [%w]", err)
 		}
@@ -42,7 +42,7 @@ second:
 		cfgEnv := os.Getenv(env)
 		if cfgEnv == "" {
 			// 环境变量中没有对应的变量
-			return nil, fmt.Errorf("No environment item set by name [%s]", env)
+			return nil, fmt.Errorf("no environment item set by name [%s]", env)
 		}
 		return []byte(cfgEnv), errOfFile
 	}
@@ -50,5 +50,5 @@ second:
 		// 没有环境变量，但是读取配置文件时发生错误，返回错误信息
 		return nil, errOfFile
 	}
-	return nil, fmt.Errorf("Please input configurations from file by -%s or from environment by -%s", configureFileArgName, configureEnvArgName)
+	return nil, fmt.Errorf("please input configurations from file by -%s or from environment by -%s", configureFileArgName, configureEnvArgName)
 }

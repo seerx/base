@@ -8,7 +8,7 @@ type DBConf struct {
 	Host               string `json:"host" yaml:"host"`                             // 数据库地址
 	Port               int    `json:"port" yaml:"port"`                             // 端口
 	User               string `json:"user" yaml:"user"`                             // 用户
-	Password           string `json:"passwd" yaml:"passwd"`                         // 密码
+	Passwd             string `json:"passwd" yaml:"passwd"`                         // 密码
 	DB                 string `json:"db" yaml:"db"`                                 // 数据库名称
 	SSLMode            string `json:"sslMode" yaml:"sslMode"`                       // pgsql 专用，默认为 disable
 	ConnectTimeout     int    `json:"connectTimeout" yaml:"connectTimeout"`         // 连接超时设置，默认为 10
@@ -24,7 +24,7 @@ func (dbc *DBConf) String() string {
 		dbc.Dialect = "postgres"
 		return pgsql(dbc)
 	}
-	panic(fmt.Errorf("Do not support database [%s]", dbc.Dialect))
+	panic(fmt.Errorf("do not support database [%s]", dbc.Dialect))
 }
 
 func pgsql(dbc *DBConf) string {
@@ -44,5 +44,5 @@ func pgsql(dbc *DBConf) string {
 	if dbc.TimeZone == "" {
 		dbc.TimeZone = "Asia/Shanghai"
 	}
-	return fmt.Sprintf(pgTemplate, dbc.Host, dbc.Port, dbc.User, dbc.DB, dbc.Password, dbc.SSLMode, dbc.ConnectTimeout)
+	return fmt.Sprintf(pgTemplate, dbc.Host, dbc.Port, dbc.User, dbc.DB, dbc.Passwd, dbc.SSLMode, dbc.ConnectTimeout)
 }
